@@ -1,49 +1,38 @@
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { useParams } from "react-router-dom";
 import { db } from "../../firebase/firebaseConfig";
 
-function CreateTask() {
+function UpdateTask() {
+  const { id } = useParams();
   const [task, setTask] = useState({
     title: "",
     description: "",
-    assignee: null,
-    due_date: null,
+    assignee: "",
+    due_date: "",
   });
 
   const [employees, setEmployees] = useState([]);
 
-  const createNewTask = (e) => {
-    e.preventDefault();
-    if (task.assignee === null || task.assignee === 0) {
-      alert("Please select an employee.");
-    } else if (task.title === "") {
-      alert("Please fill title.");
-    } else if (task.description === "") {
-      alert("Please fill description.");
-    } else {
-      const collectionTasks = collection(db, "tasks");
+  useEffect(() => {
+    const taskRef = doc(db, "tasks", id);
+    getDoc(taskRef).then((res) => {
+      const { title, description, assignee, due_date } = res.data();
 
-      addDoc(collectionTasks, task).then(
-        getDocs(collectionTasks).then((snapshot) => {
-          let tasks = [];
-
-          snapshot.docs.forEach((doc) => {
-            tasks.push({ ...doc.data(), id: doc.id });
-          });
-
-          console.log(tasks);
-        })
-      );
-
-      e.target.reset();
       setTask({
-        title: "",
-        description: "",
-        assignee: null,
-        due_date: null,
+        title,
+        description,
+        assignee,
+        due_date,
       });
-    }
-  };
+    });
+  }, [id]);
 
   useEffect(() => {
     const collectionEmployees = collection(db, "employees");
@@ -60,17 +49,30 @@ function CreateTask() {
     });
   }, []);
 
+  const updateTask = (e) => {
+    e.preventDefault();
+    if (task.assignee === "" || task.assignee === "0") {
+      alert("Please select an employee.");
+    } else if (task.title === "") {
+      alert("Please fill title.");
+    } else if (task.description === "") {
+      alert("Please fill description.");
+    } else {
+      const taskRef = doc(db, "tasks", id);
+
+      updateDoc(taskRef, task).then(() => alert("Successfully updated task."));
+    }
+  };
   return (
     <div>
-      <h1>CreateTask</h1>
-      <form
-        onSubmit={(e) => createNewTask(e)}
-      >
+      <h1>UpdateTask</h1>
+      <form onSubmit={(e) => updateTask(e)}>
         <label htmlFor="title">Title: </label>
         <input
           type="text"
           id="title"
           required
+          value={task.title}
           onChange={(e) => {
             setTask({ ...task, title: e.target.value.trim() });
           }}
@@ -80,9 +82,9 @@ function CreateTask() {
         <label htmlFor="description">Description: </label>
         <br />
         <textarea
-          type=""
           id="description"
           required
+          value={task.description}
           onChange={(e) => {
             setTask({ ...task, description: e.target.value.trim() });
           }}
@@ -91,15 +93,15 @@ function CreateTask() {
         <br />
         <label htmlFor="assignee">Assignee: </label>
         <select
-          name=""
           id="assignee"
           required
+          value={task.assignee}
           onChange={(e) => {
-            e.target.value !== "Select an employee" &&
+            e.target.value !== "0" &&
               setTask({ ...task, assignee: e.target.value });
           }}
         >
-          <option value={0}>Select an employee</option>
+          <option value="0">Select an employee</option>
           {employees.length !== 0 ? (
             employees.map((employee) => (
               <option key={employee.id} value={employee.id}>
@@ -119,6 +121,7 @@ function CreateTask() {
           type="date"
           id="due-date"
           required
+          value={task.due_date}
           onChange={(e) => {
             setTask({ ...task, due_date: e.target.value });
           }}
@@ -135,4 +138,4 @@ function CreateTask() {
   );
 }
 
-export default CreateTask;
+export default UpdateTask;

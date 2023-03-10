@@ -6,7 +6,7 @@ function CreateEmployee() {
   const [employee, setEmployee] = useState({
     full_name: "",
     email: "",
-    phone: null,
+    phone: "",
     birth: null,
     salary: null,
   });
@@ -15,7 +15,7 @@ function CreateEmployee() {
     e.preventDefault();
     if (employee.full_name === "") {
       alert("Please fill the name field.");
-    } else if (employee.phone === null || employee.phone === "") {
+    } else if (employee.phone === "") {
       alert("Please fill the phone number field.");
     } else {
       const collectionEmployees = collection(db, "employees");
@@ -29,6 +29,7 @@ function CreateEmployee() {
           });
 
           console.log(employees);
+          alert("Successfully created new employee!");
         })
       );
 

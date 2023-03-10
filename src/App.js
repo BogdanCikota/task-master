@@ -10,12 +10,11 @@ import CreateTask from "./views/tasks/CreateTask";
 import TaskDetails from "./views/tasks/TaskDetails";
 import UpdateTask from "./views/tasks/UpdateTask";
 
-
 function App() {
   return (
     <div className="App">
       <Router>
-      <div className="nav">
+        <div className="nav">
           <ul>
             <li><Link to="/">Home</Link></li>
             <li><Link to="employees">Employees</Link></li>

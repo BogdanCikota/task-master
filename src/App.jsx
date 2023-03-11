@@ -33,8 +33,8 @@ function App() {
 
           <Route exact path="employees" element={<EmployeesPage />} />
           <Route exact path="create-employee" element={<CreateEmployee />} />
-          <Route exact path="employee-profile" element={<EmployeeProfile />} />
-          <Route exact path="update-employee" element={<UpdateEmployee />} />
+          <Route exact path="employee-profile/:id" element={<EmployeeProfile />} />
+          <Route exact path="update-employee/:id" element={<UpdateEmployee />} />
 
           <Route exact path="tasks" element={<TasksPage />} />
           <Route exact path="create-task" element={<CreateTask />} />

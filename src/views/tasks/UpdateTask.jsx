@@ -128,10 +128,6 @@ function UpdateTask() {
         />
         <br />
         <br />
-
-        <input type="reset" />
-        <br />
-        <br />
         <input type="submit" />
       </form>
     </div>

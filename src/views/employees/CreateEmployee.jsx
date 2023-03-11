@@ -7,8 +7,8 @@ function CreateEmployee() {
     full_name: "",
     email: "",
     phone: "",
-    birth: null,
-    salary: null,
+    birth: "",
+    salary: "",
   });
 
   const createNewEmployee = (e) => {
@@ -37,9 +37,9 @@ function CreateEmployee() {
       setEmployee({
         full_name: "",
         email: "",
-        phone: null,
-        birth: null,
-        salary: null,
+        phone: "",
+        birth: "",
+        salary: "",
       });
     }
   };

@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import {
+  Route,
+  Link,
+  Routes,
+  HashRouter,
+} from "react-router-dom";
 import "./App.css";
 import EmployeesPage from "./views/employees/EmployeesPage";
 import TasksPage from "./views/tasks/TasksPage";
@@ -14,8 +19,8 @@ import NotFound from "./views/notFound/NotFound";
 
 function App() {
   return (
-    <div className="App">
-      <Router>
+    <HashRouter basename="/">
+      <div className="App">
         <div className="nav">
           <ul>
             <li>
@@ -52,8 +57,8 @@ function App() {
           <Route exact path="update-task/:id" element={<UpdateTask />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </Router>
-    </div>
+      </div>
+    </HashRouter>
   );
 }
 

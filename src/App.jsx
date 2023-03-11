@@ -6,6 +6,7 @@ import HomePage from "./views/home/HomePage";
 import CreateEmployee from "./views/employees/CreateEmployee";
 import EmployeeProfile from "./views/employees/EmployeeProfile";
 import UpdateEmployee from "./views/employees/UpdateEmployee";
+import TopEmployees from "./views/employees/TopEmployees";
 import CreateTask from "./views/tasks/CreateTask";
 import TaskDetails from "./views/tasks/TaskDetails";
 import UpdateTask from "./views/tasks/UpdateTask";
@@ -33,8 +34,17 @@ function App() {
 
           <Route exact path="employees" element={<EmployeesPage />} />
           <Route exact path="create-employee" element={<CreateEmployee />} />
-          <Route exact path="employee-profile/:id" element={<EmployeeProfile />} />
-          <Route exact path="update-employee/:id" element={<UpdateEmployee />} />
+          <Route
+            exact
+            path="employee-profile/:id"
+            element={<EmployeeProfile />}
+          />
+          <Route
+            exact
+            path="update-employee/:id"
+            element={<UpdateEmployee />}
+          />
+          <Route exact path="top-employees" element={<TopEmployees />} />
 
           <Route exact path="tasks" element={<TasksPage />} />
           <Route exact path="create-task" element={<CreateTask />} />

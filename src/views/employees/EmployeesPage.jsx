@@ -37,6 +37,8 @@ function EmployeesPage() {
       <h1>EmpolyeesPage</h1>
       <Link to="/create-employee">Create Empolyee</Link>
       <br />
+      <Link to='/top-employees'>Top 5 Employees in the past month</Link>
+      <br />
       <br />
       <div className="employee-list">
         {employees.length > 0 ? (

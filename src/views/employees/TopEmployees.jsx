@@ -56,18 +56,18 @@ function TopEmployees() {
               employeesArr.push({ ...doc.data(), id: doc.id });
             });
 
-            let filteredEmployees = employeesArr.map((empl) => {
-              let tempObj = {};
+            const tempArr = [];
+
+            employeesArr.forEach((empl) => {
+             
               parsedAssignees.forEach((item) => {
                 if (item.assigneeId === empl.id) {
-                  tempObj = { assignee: empl.full_name, count: item.count };
+                  tempArr.push({ assignee: empl.full_name, count: item.count })
                 }
               });
-
-              return tempObj;
             });
 
-            const sortedEmployees = filteredEmployees
+            const sortedEmployees = tempArr
               .sort((a, b) => b.count - a.count)
               .slice(0, 5);
 

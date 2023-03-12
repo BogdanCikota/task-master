@@ -39,17 +39,19 @@ function CreateTask() {
 
   useEffect(() => {
     const collectionEmployees = collection(db, "employees");
-    getDocs(collectionEmployees).then((snapshot) => {
-      if (snapshot.docs.length > 0) {
-        let employeesArr = [];
+    getDocs(collectionEmployees)
+      .then((snapshot) => {
+        if (snapshot.docs.length > 0) {
+          let employeesArr = [];
 
-        snapshot.docs.forEach((doc) => {
-          employeesArr.push({ ...doc.data(), id: doc.id });
-        });
+          snapshot.docs.forEach((doc) => {
+            employeesArr.push({ ...doc.data(), id: doc.id });
+          });
 
-        setEmployees(employeesArr);
-      }
-    });
+          setEmployees(employeesArr);
+        }
+      })
+      .catch((err) => alert("Error getting collection of employees."));
   }, []);
 
   return (
@@ -118,7 +120,6 @@ function CreateTask() {
         <input type="submit" className="button submit" />
 
         <input type="reset" className="button reset" />
-        
       </form>
     </div>
   );

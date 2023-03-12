@@ -4,15 +4,17 @@ import { useParams } from "react-router-dom";
 import { db } from "../../firebase/firebaseConfig";
 
 function EmployeeProfile() {
-  const { id } = useParams();
+  const { id = "" } = useParams();
   const [employee, setEmployee] = useState({});
 
   useEffect(() => {
     const employeeRef = doc(db, "employees", id);
 
-    getDoc(employeeRef).then((response) => {
-      setEmployee(response.data());
-    });
+    getDoc(employeeRef)
+      .then((response) => {
+        setEmployee(response.data());
+      })
+      .catch((err) => alert("Error getting employee."));
   }, [id]);
 
   return (
@@ -20,11 +22,21 @@ function EmployeeProfile() {
       <h1>EmployeeProfile</h1>
       {employee && (
         <div className="box">
-          <div><span>Name:</span> {employee.full_name}</div>
-          <div><span>Email:</span> {employee.email}</div>
-          <div><span>Phone:</span> {employee.phone}</div>
-          <div><span>Birth:</span> {employee.birth}</div>
-          <div><span>Salary &euro;:</span> {employee.salary}</div>
+          <div>
+            <span>Name:</span> {employee.full_name}
+          </div>
+          <div>
+            <span>Email:</span> {employee.email}
+          </div>
+          <div>
+            <span>Phone:</span> {employee.phone}
+          </div>
+          <div>
+            <span>Birth:</span> {employee.birth}
+          </div>
+          <div>
+            <span>Salary &euro;:</span> {employee.salary}
+          </div>
         </div>
       )}
     </div>

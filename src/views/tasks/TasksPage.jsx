@@ -11,27 +11,30 @@ function TasksPage() {
 
   useEffect(() => {
     const collectionTasks = collection(db, "tasks");
-    getDocs(collectionTasks).then((snapshot) => {
-      if (snapshot.docs.length > 0) {
-        let tasksArr = [];
+    getDocs(collectionTasks)
+      .then((snapshot) => {
+        if (snapshot.docs.length > 0) {
+          let tasksArr = [];
 
-        snapshot.docs.forEach((doc) => {
-          tasksArr.push({ ...doc.data(), id: doc.id });
-        });
+          snapshot.docs.forEach((doc) => {
+            tasksArr.push({ ...doc.data(), id: doc.id });
+          });
 
-        setTasks(tasksArr);
-      }
-    });
+          setTasks(tasksArr);
+        }
+      })
+      .catch((err) => alert("Error getting collection of tasks."));
   }, []);
 
   const deleteTask = (task) => {
-    console.log(task.id);
     const taskRef = doc(db, "tasks", task.id);
-    deleteDoc(taskRef).then(() => {
-      let tasksArr = tasks.filter((tsk) => tsk.id !== task.id);
-      setTasks(tasksArr);
-      alert("Successfully deleted task!");
-    });
+    deleteDoc(taskRef)
+      .then(() => {
+        let tasksArr = tasks.filter((tsk) => tsk.id !== task.id);
+        setTasks(tasksArr);
+        alert("Successfully deleted task!");
+      })
+      .catch((err) => alert("Error deleting task."));
   };
 
   return (

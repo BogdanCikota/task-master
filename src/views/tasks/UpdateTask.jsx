@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { db } from "../../firebase/firebaseConfig";
 
 function UpdateTask() {
-  const { id } = useParams();
+  const { id = "" } = useParams();
   const [task, setTask] = useState({
     title: "",
     description: "",
@@ -22,31 +22,35 @@ function UpdateTask() {
 
   useEffect(() => {
     const taskRef = doc(db, "tasks", id);
-    getDoc(taskRef).then((res) => {
-      const { title, description, assignee, due_date } = res.data();
+    getDoc(taskRef)
+      .then((res) => {
+        const { title = '', description = '', assignee = '', due_date = '' } = res.data();
 
-      setTask({
-        title,
-        description,
-        assignee,
-        due_date,
-      });
-    });
+        setTask({
+          title,
+          description,
+          assignee,
+          due_date,
+        });
+      })
+      .catch((err) => alert("Error getting task."));
   }, [id]);
 
   useEffect(() => {
     const collectionEmployees = collection(db, "employees");
-    getDocs(collectionEmployees).then((snapshot) => {
-      if (snapshot.docs.length > 0) {
-        let employeesArr = [];
+    getDocs(collectionEmployees)
+      .then((snapshot) => {
+        if (snapshot.docs.length > 0) {
+          let employeesArr = [];
 
-        snapshot.docs.forEach((doc) => {
-          employeesArr.push({ ...doc.data(), id: doc.id });
-        });
+          snapshot.docs.forEach((doc) => {
+            employeesArr.push({ ...doc.data(), id: doc.id });
+          });
 
-        setEmployees(employeesArr);
-      }
-    });
+          setEmployees(employeesArr);
+        }
+      })
+      .catch((err) => alert("Error getting collection of employees."));
   }, []);
 
   const updateTask = (e) => {
@@ -60,7 +64,9 @@ function UpdateTask() {
     } else {
       const taskRef = doc(db, "tasks", id);
 
-      updateDoc(taskRef, task).then(() => alert("Successfully updated task."));
+      updateDoc(taskRef, task)
+        .then(() => alert("Successfully updated task."))
+        .catch((err) => alert("Error updating task."));
     }
   };
   return (

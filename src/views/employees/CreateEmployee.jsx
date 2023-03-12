@@ -20,18 +20,19 @@ function CreateEmployee() {
     } else {
       const collectionEmployees = collection(db, "employees");
 
-      addDoc(collectionEmployees, employee).then(
-        getDocs(collectionEmployees).then((snapshot) => {
-          let employees = [];
+      addDoc(collectionEmployees, employee)
+        .then(
+          getDocs(collectionEmployees).then((snapshot) => {
+            let employees = [];
 
-          snapshot.docs.forEach((doc) => {
-            employees.push({ ...doc.data(), id: doc.id });
-          });
+            snapshot.docs.forEach((doc) => {
+              employees.push({ ...doc.data(), id: doc.id });
+            });
 
-          console.log(employees);
-          alert("Successfully created new employee!");
-        })
-      );
+            alert("Successfully created new employee!");
+          })
+        )
+        .catch((err) => alert("Error creating new employee."));
 
       e.target.reset();
       setEmployee({
@@ -103,9 +104,9 @@ function CreateEmployee() {
         <br />
         <br />
         <br />
-       
+
         <input className="button submit" type="submit" />
-        
+
         <input className="button reset" type="reset" />
       </form>
     </div>

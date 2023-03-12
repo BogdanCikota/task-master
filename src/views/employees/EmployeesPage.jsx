@@ -11,26 +11,30 @@ function EmployeesPage() {
 
   useEffect(() => {
     const collectionEmployees = collection(db, "employees");
-    getDocs(collectionEmployees).then((snapshot) => {
-      if (snapshot.docs.length > 0) {
-        let employeesArr = [];
+    getDocs(collectionEmployees)
+      .then((snapshot) => {
+        if (snapshot.docs.length > 0) {
+          let employeesArr = [];
 
-        snapshot.docs.forEach((doc) => {
-          employeesArr.push({ ...doc.data(), id: doc.id });
-        });
+          snapshot.docs.forEach((doc) => {
+            employeesArr.push({ ...doc.data(), id: doc.id });
+          });
 
-        setEmployees(employeesArr);
-      }
-    });
+          setEmployees(employeesArr);
+        }
+      })
+      .catch((err) => alert("Error getting collection of employees."));
   }, []);
 
   const deleteEmployee = (employee) => {
     const employeeRef = doc(db, "employees", employee.id);
-    deleteDoc(employeeRef).then(() => {
-      let employeesArr = employees.filter((emp) => emp.id !== employee.id);
-      setEmployees(employeesArr);
-      alert("Successfully deleted employee!");
-    });
+    deleteDoc(employeeRef)
+      .then(() => {
+        let employeesArr = employees.filter((emp) => emp.id !== employee.id);
+        setEmployees(employeesArr);
+        alert("Successfully deleted employee!");
+      })
+      .catch((err) => alert("Error deleting employee."));
   };
 
   return (

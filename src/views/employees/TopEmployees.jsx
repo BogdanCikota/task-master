@@ -32,74 +32,81 @@ function TopEmployees() {
 
     const collectionTasks = collection(db, "tasks");
 
-    getDocs(collectionTasks).then((snapshot) => {
-      if (snapshot.docs.length > 0) {
-        let tasksArr = [];
+    getDocs(collectionTasks)
+      .then((snapshot) => {
+        if (snapshot.docs.length > 0) {
+          let tasksArr = [];
 
-        snapshot.docs.forEach((doc) => {
-          const dueDateMonth = moment(doc.data().due_date).format("MMMM");
+          snapshot.docs.forEach((doc) => {
+            const dueDateMonth = moment(doc.data().due_date).format("MMMM");
 
-          if (dueDateMonth === pastMonth) {
-            tasksArr.push({ ...doc.data(), id: doc.id });
-          }
-        });
+            if (dueDateMonth === pastMonth) {
+              tasksArr.push({ ...doc.data(), id: doc.id });
+            }
+          });
 
-        const parsedAssignees = countAssignees(tasksArr);
+          const parsedAssignees = countAssignees(tasksArr);
 
-        // get all employees
-        const collectionEmployees = collection(db, "employees");
-        getDocs(collectionEmployees).then((snapshot) => {
-          if (snapshot.docs.length > 0) {
-            let employeesArr = [];
+          // get all employees
+          const collectionEmployees = collection(db, "employees");
+          getDocs(collectionEmployees)
+            .then((snapshot) => {
+              if (snapshot.docs.length > 0) {
+                let employeesArr = [];
 
-            snapshot.docs.forEach((doc) => {
-              employeesArr.push({ ...doc.data(), id: doc.id });
-            });
+                snapshot.docs.forEach((doc) => {
+                  employeesArr.push({ ...doc.data(), id: doc.id });
+                });
 
-            const tempArr = [];
+                const tempArr = [];
 
-            employeesArr.forEach((empl) => {
-             
-              parsedAssignees.forEach((item) => {
-                if (item.assigneeId === empl.id) {
-                  tempArr.push({ assignee: empl.full_name, count: item.count })
-                }
-              });
-            });
+                employeesArr.forEach((empl) => {
+                  parsedAssignees.forEach((item) => {
+                    if (item.assigneeId === empl.id) {
+                      tempArr.push({
+                        assignee: empl.full_name,
+                        count: item.count,
+                      });
+                    }
+                  });
+                });
 
-            const sortedEmployees = tempArr
-              .sort((a, b) => b.count - a.count)
-              .slice(0, 5);
+                const sortedEmployees = tempArr
+                  .sort((a, b) => b.count - a.count)
+                  .slice(0, 5);
 
-            setTopEmployees(sortedEmployees);
-          }
-        });
-      }
-    });
+                setTopEmployees(sortedEmployees);
+              }
+            })
+            .catch((err) => alert("Error getting collection of employees."));
+        }
+      })
+      .catch((err) => alert("Error getting collection of tasks."));
   }, []);
 
   return (
     <div>
       <h1>TopEmployees</h1>
-      <table class="top-employees box">
+      <table className="top-employees box">
         <thead>
           <tr>
-            <th class="tg-0lax">Employee</th>
-            <th class="tg-0lax">Task count</th>
+            <th>Employee</th>
+            <th>Task count</th>
           </tr>
         </thead>
         <tbody>
           {topEmployees.length > 0 &&
-            topEmployees.map((item, index) => (
-              item.assignee &&
-              <tr key={index}>
-                <td class="tg-0lax">{item.assignee}</td>
-                <td class="tg-0lax">
-                  
-                  <span>{item.count}</span>
-                </td>
-              </tr>
-            ))}
+            topEmployees.map(
+              (item, index) =>
+                item.assignee && (
+                  <tr key={index}>
+                    <td>{item.assignee}</td>
+                    <td>
+                      <span>{item.count}</span>
+                    </td>
+                  </tr>
+                )
+            )}
         </tbody>
       </table>
     </div>

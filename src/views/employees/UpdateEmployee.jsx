@@ -1,14 +1,10 @@
-import {
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../../firebase/firebaseConfig";
 
 function UpdateEmployee() {
-  const { id } = useParams();
+  const { id = "" } = useParams();
   const [employee, setEmployee] = useState({
     full_name: "",
     email: "",
@@ -19,11 +15,13 @@ function UpdateEmployee() {
 
   useEffect(() => {
     const employeeRef = doc(db, "employees", id);
-    getDoc(employeeRef).then((res) => {
-      const { full_name, email, phone, birth, salary } = res.data();
+    getDoc(employeeRef)
+      .then((res) => {
+        const { full_name = '', email = '', phone = '', birth = '', salary = '' } = res.data();
 
-      setEmployee({ full_name, email, phone, birth, salary });
-    });
+        setEmployee({ full_name, email, phone, birth, salary });
+      })
+      .catch((err) => alert("Error getting employee."));
   }, [id]);
 
   const updateEmployee = (e) => {
@@ -35,7 +33,9 @@ function UpdateEmployee() {
     } else {
       const employeeRef = doc(db, "employees", id);
 
-      updateDoc(employeeRef, employee).then(() => alert("Successfully updated employee."));
+      updateDoc(employeeRef, employee)
+        .then(() => alert("Successfully updated employee."))
+        .catch((err) => alert("Error updating employee."));
     }
   };
   return (
@@ -106,7 +106,7 @@ function UpdateEmployee() {
         <input className="button" type="submit" />
       </form>
     </div>
-  )
+  );
 }
 
-export default UpdateEmployee
+export default UpdateEmployee;

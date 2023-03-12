@@ -4,24 +4,26 @@ import { useParams } from "react-router-dom";
 import { db } from "../../firebase/firebaseConfig";
 
 function TaskDetails() {
-  const { id } = useParams();
+  const { id = "" } = useParams();
   const [task, setTask] = useState({});
   const [assignee, setAssignee] = useState("");
 
   useEffect(() => {
     const taskRef = doc(db, "tasks", id);
 
-    getDoc(taskRef).then((response) => {
-      setTask(response.data());
+    getDoc(taskRef)
+      .then((response) => {
+        setTask(response.data());
 
-      let newAssignee = response.data().assignee;
+        let newAssignee = response.data().assignee;
 
-      const assigneeRef = doc(db, "employees", newAssignee);
+        const assigneeRef = doc(db, "employees", newAssignee);
 
-      getDoc(assigneeRef).then((res) => {
-        setAssignee(res.data().full_name)
-      });
-    });
+        getDoc(assigneeRef).then((res) => {
+          setAssignee(res.data().full_name);
+        });
+      })
+      .catch((err) => alert("Error getting task."));
   }, [id]);
 
   return (
@@ -29,10 +31,18 @@ function TaskDetails() {
       <h1>TaskDetails</h1>
       {task && (
         <div className="box">
-          <div><span>Title:</span> {task.title}</div>
-          <div><span>Description:</span> {task.description}</div>
-          <div><span>Assignee:</span> {assignee}</div>
-          <div><span>Due date:</span> {task.due_date}</div>
+          <div>
+            <span>Title:</span> {task.title}
+          </div>
+          <div>
+            <span>Description:</span> {task.description}
+          </div>
+          <div>
+            <span>Assignee:</span> {assignee}
+          </div>
+          <div>
+            <span>Due date:</span> {task.due_date}
+          </div>
         </div>
       )}
     </div>

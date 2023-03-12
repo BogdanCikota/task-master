@@ -66,7 +66,7 @@ function UpdateTask() {
   return (
     <div>
       <h1>UpdateTask</h1>
-      <form onSubmit={(e) => updateTask(e)}>
+      <form className="form box" onSubmit={(e) => updateTask(e)}>
         <label htmlFor="title">Title: </label>
         <input
           type="text"
@@ -74,7 +74,7 @@ function UpdateTask() {
           required
           value={task.title}
           onChange={(e) => {
-            setTask({ ...task, title: e.target.value.trim() });
+            setTask({ ...task, title: e.target.value });
           }}
         />
         <br />
@@ -86,7 +86,7 @@ function UpdateTask() {
           required
           value={task.description}
           onChange={(e) => {
-            setTask({ ...task, description: e.target.value.trim() });
+            setTask({ ...task, description: e.target.value });
           }}
         />
         <br />
@@ -128,7 +128,8 @@ function UpdateTask() {
         />
         <br />
         <br />
-        <input type="submit" />
+        <br />
+        <input className="button" type="submit" />
       </form>
     </div>
   );

@@ -36,11 +36,11 @@ function HomePage() {
     });
   }, []);
   return (
-    <div>
-      <h1>HomePage</h1>
+    <div className="home">
+      <h1>Welcome to Task Master</h1>
       <div className="statistics">
-        <div>Total tasks: {tasks.length}</div>
-        <div>Total employees: {employees.length}</div>
+        <div className="total box">Total tasks: <div className="num">{tasks.length}</div></div>
+        <div className="total box">Total employees: <div className="num">{employees.length}</div></div>
       </div>
     </div>
   );

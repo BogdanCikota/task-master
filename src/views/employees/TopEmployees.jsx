@@ -81,16 +81,27 @@ function TopEmployees() {
   return (
     <div>
       <h1>TopEmployees</h1>
-      <div className="top-employees">
-        {topEmployees.length > 0 &&
-          topEmployees.map((item, index) => (
-            <div key={index} style={{ borderBottom: "1px solid black" }}>
-              <div>{item.assignee}</div>
-              Task count:
-              <span>{item.count}</span>
-            </div>
-          ))}
-      </div>
+      <table class="top-employees box">
+        <thead>
+          <tr>
+            <th class="tg-0lax">Employee</th>
+            <th class="tg-0lax">Task count</th>
+          </tr>
+        </thead>
+        <tbody>
+          {topEmployees.length > 0 &&
+            topEmployees.map((item, index) => (
+              item.assignee &&
+              <tr key={index}>
+                <td class="tg-0lax">{item.assignee}</td>
+                <td class="tg-0lax">
+                  
+                  <span>{item.count}</span>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
     </div>
   );
 }

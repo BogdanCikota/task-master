@@ -55,7 +55,7 @@ function CreateTask() {
   return (
     <div>
       <h1>CreateTask</h1>
-      <form onSubmit={(e) => createNewTask(e)}>
+      <form className="form box" onSubmit={(e) => createNewTask(e)}>
         <label htmlFor="title">Title: </label>
         <input
           type="text"
@@ -114,11 +114,11 @@ function CreateTask() {
         />
         <br />
         <br />
+        <br />
+        <input type="submit" className="button submit" />
 
-        <input type="reset" />
-        <br />
-        <br />
-        <input type="submit" />
+        <input type="reset" className="button reset" />
+        
       </form>
     </div>
   );

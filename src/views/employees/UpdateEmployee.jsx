@@ -40,8 +40,8 @@ function UpdateEmployee() {
   };
   return (
     <div>
-      <h1>CreateEmployee</h1>
-      <form onSubmit={(e) => updateEmployee(e)}>
+      <h1>UpdateEmployee</h1>
+      <form className="form box" onSubmit={(e) => updateEmployee(e)}>
         <label htmlFor="name">Full name: </label>
         <input
           type="text"
@@ -49,7 +49,7 @@ function UpdateEmployee() {
           required
           value={employee.full_name}
           onChange={(e) => {
-            setEmployee({ ...employee, full_name: e.target.value.trim() });
+            setEmployee({ ...employee, full_name: e.target.value });
           }}
         />
         <br />
@@ -102,7 +102,8 @@ function UpdateEmployee() {
         />
         <br />
         <br />
-        <input type="submit" />
+        <br />
+        <input className="button" type="submit" />
       </form>
     </div>
   )

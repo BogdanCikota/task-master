@@ -1,10 +1,5 @@
-import {
-  Route,
-  Link,
-  Routes,
-  HashRouter,
-} from "react-router-dom";
-import "./App.css";
+import "./assets/styles/index.scss";
+import { Route, Routes, HashRouter } from "react-router-dom";
 import EmployeesPage from "./views/employees/EmployeesPage";
 import TasksPage from "./views/tasks/TasksPage";
 import HomePage from "./views/home/HomePage";
@@ -16,24 +11,13 @@ import CreateTask from "./views/tasks/CreateTask";
 import TaskDetails from "./views/tasks/TaskDetails";
 import UpdateTask from "./views/tasks/UpdateTask";
 import NotFound from "./views/notFound/NotFound";
+import Navigation from "./components/Navigation";
 
 function App() {
   return (
     <HashRouter basename="/">
       <div className="App">
-        <div className="nav">
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="employees">Employees</Link>
-            </li>
-            <li>
-              <Link to="tasks">Tasks</Link>
-            </li>
-          </ul>
-        </div>
+        <Navigation />
         <Routes>
           <Route exact path="/" element={<HomePage />} />
 

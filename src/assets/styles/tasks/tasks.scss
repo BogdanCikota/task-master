@@ -1,0 +1,46 @@
+.tasks-list {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+
+  .box {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    font-size: 1.2rem;
+    .task-title {
+      @media only screen and (max-width: 600px) {
+        max-width: 5rem;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+.task-details {
+  .box {
+    padding: 1rem;
+    display: grid;
+    gap: 1rem;
+    font-size: 1.2rem;
+    @media only screen and (max-width: 600px) {
+        overflow: scroll;
+    }
+  }
+ 
+  span {
+    color: #004c54;
+  }
+}
+
+.submit {
+  margin-right: 1rem;
+}
+
+.reset {
+  background-color: red !important;
+}
+
+.reset:hover {
+  background-color: rgb(213, 1, 1) !important;
+}

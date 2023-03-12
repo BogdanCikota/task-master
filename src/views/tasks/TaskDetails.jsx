@@ -25,14 +25,14 @@ function TaskDetails() {
   }, [id]);
 
   return (
-    <div>
+    <div className="task-details">
       <h1>TaskDetails</h1>
       {task && (
-        <div>
-          <div>Title: {task.title}</div>
-          <div>Description: {task.description}</div>
-          <div>Assignee: {assignee}</div>
-          <div>Due date: {task.due_date}</div>
+        <div className="box">
+          <div><span>Title:</span> {task.title}</div>
+          <div><span>Description:</span> {task.description}</div>
+          <div><span>Assignee:</span> {assignee}</div>
+          <div><span>Due date:</span> {task.due_date}</div>
         </div>
       )}
     </div>

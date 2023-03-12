@@ -2,9 +2,9 @@ import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../firebase/firebaseConfig";
-import infoIcon from "../../assets/images/circle-info-solid.svg";
-import editIcon from "../../assets/images/square-pen-solid.svg";
-import deleteIcon from "../../assets/images/trash-solid.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/images/trash-solid.svg";
+import { ReactComponent as EditIcon } from "../../assets/images/square-pen-solid.svg";
+import { ReactComponent as InfoIcon } from "../../assets/images/circle-info-solid.svg";
 
 function TasksPage() {
   const [tasks, setTasks] = useState([]);
@@ -30,32 +30,37 @@ function TasksPage() {
     deleteDoc(taskRef).then(() => {
       let tasksArr = tasks.filter((tsk) => tsk.id !== task.id);
       setTasks(tasksArr);
+      alert("Successfully deleted task!");
     });
   };
 
   return (
     <div>
       <h1>TasksPage</h1>
-      <Link to="/create-task">Create Task</Link>
+      <Link className="create-task button" to="/create-task">
+        Create Task
+      </Link>
       <br />
       <br />
       <div className="tasks-list">
         {tasks.length > 0 ? (
           tasks.map((task) => (
-            <div key={task.id} style={{ border: "1px solid black" }}>
-              <span>{task.title}</span>
-              <br />
-              <Link to={`/task-details/${task.id}`}>
-                <img src={infoIcon} alt="info icon" width={20} />
-              </Link>
-              <br />
-              <Link to={`/update-task/${task.id}`}>
-                <img src={editIcon} alt="edit icon" width={20} />
-              </Link>
-              <br />
-              <span onClick={() => deleteTask(task)}>
-                <img src={deleteIcon} alt="delete icon" width={20} />
-              </span>
+            <div key={task.id} className="box">
+              <div className="task-title">{task.title}</div>
+
+              <div className="icons">
+                <Link to={`/task-details/${task.id}`}>
+                  <InfoIcon className="info icon" />
+                </Link>
+
+                <Link to={`/update-task/${task.id}`}>
+                  <EditIcon className="edit icon" />
+                </Link>
+
+                <span onClick={() => deleteTask(task)}>
+                  <DeleteIcon className="delete icon" />
+                </span>
+              </div>
             </div>
           ))
         ) : (

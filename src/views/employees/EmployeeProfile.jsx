@@ -16,15 +16,15 @@ function EmployeeProfile() {
   }, [id]);
 
   return (
-    <div>
+    <div className="employee-profile">
       <h1>EmployeeProfile</h1>
       {employee && (
-        <div>
-          <div>Name: {employee.full_name}</div>
-          <div>Email: {employee.email}</div>
-          <div>Phone: {employee.phone}</div>
-          <div>Birth: {employee.birth}</div>
-          <div>Salary &euro;: {employee.salary}</div>
+        <div className="box">
+          <div><span>Name:</span> {employee.full_name}</div>
+          <div><span>Email:</span> {employee.email}</div>
+          <div><span>Phone:</span> {employee.phone}</div>
+          <div><span>Birth:</span> {employee.birth}</div>
+          <div><span>Salary &euro;:</span> {employee.salary}</div>
         </div>
       )}
     </div>

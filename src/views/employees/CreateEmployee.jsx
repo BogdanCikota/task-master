@@ -46,7 +46,7 @@ function CreateEmployee() {
   return (
     <div>
       <h1>CreateEmployee</h1>
-      <form onSubmit={(e) => createNewEmployee(e)}>
+      <form className="form box" onSubmit={(e) => createNewEmployee(e)}>
         <label htmlFor="name">Full name: </label>
         <input
           type="text"
@@ -102,10 +102,11 @@ function CreateEmployee() {
         />
         <br />
         <br />
-        <input type="reset" />
         <br />
-        <br />
-        <input type="submit" />
+       
+        <input className="button submit" type="submit" />
+        
+        <input className="button reset" type="reset" />
       </form>
     </div>
   );
